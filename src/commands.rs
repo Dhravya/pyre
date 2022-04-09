@@ -117,6 +117,8 @@ fn open_ide() {
             .arg(".")
             .output()
             .expect("Failed to open IDE");
+        // Exit
+        std::process::exit(0);
     } else {
         println!("No editor set. Please run pyre config-editor <editor command>");
     }
