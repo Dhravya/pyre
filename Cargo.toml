@@ -9,3 +9,4 @@ description = "The better pypi"
 [dependencies]
 clap = { version = "3.0", features = ["derive"] }
 dialoguer = "0.10.0"
+toml = "0.5.8"

@@ -1,20 +1,33 @@
 use dialoguer::{theme::ColorfulTheme, Select};
 use std::{io::Write, process::Command, vec};
 
-
-
 pub fn install_packages(packages: String) {
     println!("Preparing : {}", packages);
 
     // Split the string into a vector of strings
     let packages: Vec<&str> = packages.split(" ").collect();
+    let mut pip_path = String::new();
+
+    // Check if env folder exists
+    if !std::path::Path::new("env").exists() {
+        pip_path = "pip".to_string();
+    } else {
+        // Get operating system
+        if std::env::consts::OS == "windows" {
+            pip_path = "env/Scripts/pip.exe".to_string();
+        } else if std::env::consts::OS == "linux" {
+            pip_path = "env/bin/pip".to_string();
+        } else if std::env::consts::OS == "macos" {
+            pip_path = "env/bin/pip".to_string();
+        }
+    }
 
     // Run pip install package1 package2
-    let output = Command::new("pip")
+    let output = Command::new(pip_path)
         .arg("install")
         .args(&packages)
         .output()
-        .expect("Failed to execute process");
+        .expect("Failed to execute process. Are you sure that you are in the right directory?");
 
     // Print the output of the command
     println!("{}", String::from_utf8_lossy(&output.stdout));
@@ -77,6 +90,21 @@ pub fn create_new_project(name: String) {
 
     println!("Successfully initialised python project");
 
+    let ask = Select::with_theme(&ColorfulTheme::default())
+        .with_prompt("Do you want to open in IDE?")
+        .items(&vec!["Yes", "No"])
+        .interact()
+        .unwrap();
+
+    match ask {
+        0 => open_ide(),
+        _ => println!("Not opening IDE"),
+    }
+
+    println!("All done! If you liked this, please star the repo on github - https://github.com/dhravya/pyre. If you faced any issues, Feel free to raise an issue on github");
+}
+
+fn open_ide() {
     let ides = vec!["code", "sublime", "code-insiders", "atom", "idea"];
 
     let ide = Select::with_theme(&ColorfulTheme::default())
@@ -123,6 +151,5 @@ pub fn create_new_project(name: String) {
             println!("Unable to open IDE");
         }
     }
-
-    println!("All done! If you liked this, please star the repo on github - https://github.com/dhravya/pyre. If you faced any issues, Feel free to raise an issue on github");
 }
+
