@@ -1,14 +1,37 @@
 use clap::{Parser, Subcommand};
 mod commands;
 mod helpers;
+mod manager;
 
 #[derive(Subcommand)]
 enum Commands {
-    I { packages: Option<String> },
-    Install { packages: Option<String> },
-    Uninstall { package: String },
-    New { name: Option<String> },
+    /// Install Packages - pass packages seperated by spaces
+    I {
+        packages: Option<String>,
+    },
+    Install {
+        packages: Option<String>,
+    },
+    /// Uninstalls a package, well, runs pip uninstall
+    Uninstall {
+        package: String,
+    },
+    /// Creates a new python project
+    New {
+        name: Option<String>,
+    },
+    /// Runs the python script. To configure this, make a Pyre.toml file and add the script to the data section
     Run,
+    /// Configuration the open editor command
+    ConfigEditor {
+        editor_command: Option<String>,
+    },
+    /// Opens the project specified by the project name
+    Open {
+        project_name: String,
+    },
+    /// Lists all the projects
+    List,
 }
 
 // Pyre: The cargo for python
@@ -52,6 +75,22 @@ fn main() {
                 .arg(package)
                 .output()
                 .expect("Failed to execute process");
+        }
+        Commands::ConfigEditor { editor_command } => {
+            manager::set_editor(editor_command.clone().unwrap());
+        }
+        Commands::Open { project_name } => {
+            let editor = manager::get_editor();
+            let project_path = manager::get_project_path(project_name);
+
+            std::process::Command::new(editor)
+                .arg(project_path)
+                .output()
+                .expect("Failed to execute process");
+        }
+        Commands::List => {
+            manager::get_projects();
+            println!("Now you can open the project by running pyre open <project_name>");
         },
     }
 }

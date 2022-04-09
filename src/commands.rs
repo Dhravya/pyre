@@ -1,3 +1,4 @@
+use crate::manager::{get_editor, add_project};
 use dialoguer::{theme::ColorfulTheme, Select};
 use std::{io::Write, process::Command, vec};
 
@@ -61,7 +62,7 @@ pub fn create_new_project(name: String) {
     // Create the directory
     std::fs::create_dir(&name).expect("Unable to create directory");
 
-    std::env::set_current_dir(name).expect("Unable to change directory");
+    std::env::set_current_dir(&name).expect("Unable to change directory");
 
     Command::new("python")
         .arg("-m")
@@ -88,7 +89,12 @@ pub fn create_new_project(name: String) {
     std::fs::create_dir("src").expect("Failed to create src directory");
     std::fs::File::create("src/main.py").expect("Failed to create main file");
 
+    // Get current directory
+    let current_dir = std::env::current_dir().expect("Unable to get current directory");
+    add_project(&name.as_str(), current_dir.to_str().unwrap());
+
     println!("Successfully initialised python project");
+    println!("All projects are automatically saved by pyre. To open a project, run pyre open <project name>.\nTo see your projects, run pyre list. You can also set your default editor by running pyre config-editor <editor command>");
 
     let ask = Select::with_theme(&ColorfulTheme::default())
         .with_prompt("Do you want to open in IDE?")
@@ -105,6 +111,16 @@ pub fn create_new_project(name: String) {
 }
 
 fn open_ide() {
+    let editor = get_editor();
+    if !editor.is_empty() {
+        Command::new(editor)
+            .arg(".")
+            .output()
+            .expect("Failed to open IDE");
+    } else {
+        println!("No editor set. Please run pyre config-editor <editor command>");
+    }
+
     let ides = vec!["code", "sublime", "code-insiders", "atom", "idea"];
 
     let ide = Select::with_theme(&ColorfulTheme::default())
@@ -152,4 +168,3 @@ fn open_ide() {
         }
     }
 }
-
