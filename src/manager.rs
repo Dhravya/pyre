@@ -48,10 +48,6 @@ pub fn get_editor() -> String {
     }
 }
 
-pub fn get_json_path() -> String {
-    let data_path = config_dir().unwrap().join("pyre.json");
-    data_path.to_str().unwrap().to_string()
-}
 
 pub fn get_project_path(project_name: &str) -> String {
     let data_file = std::fs::read_to_string(config_dir().unwrap().join("pyre.json")).expect(
