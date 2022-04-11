@@ -23,6 +23,13 @@ Just run this command, make sure you have cargo installed
 cargo install pyre
 ```
 
+Or, go to [releases](https://github.com/dhravya/pyre/releases), download the latest version in the `bin` directory and done!
+
+Now, run this to get started
+```
+pyre help
+```
+
 # 📷 Screenshots, and demonstrations
 
 ### Help Command
