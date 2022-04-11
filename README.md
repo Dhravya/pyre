@@ -36,13 +36,13 @@ pyre help
 ![pyre help](https://github.com/Dhravya/pyre/blob/11b56eee3ead32e104079638dade03f4b62a36d0/assets/help.png?raw=true)
 
 ### New Project command
-![Pyre new discord_bot](https://github.com/Dhravya/pyre/blob/11b56eee3ead32e104079638dade03f4b62a36d0/assets/new_command.gif?raw=true))
+![Pyre new discord_bot](https://github.com/Dhravya/pyre/blob/11b56eee3ead32e104079638dade03f4b62a36d0/assets/new_command.gif?raw=true)
 
 > You can configure your open editor to whatever you want. For my case, I have set it to `code-insiders.cmd`. To config editor, use `pyre config-editor <open_command>`
 
 As it says, all new project names and their paths are saved to the system default for LocalData, I've used the `dirs` crate to get location, and create a `pyre.json` in the directory.
 
-You can also add projects manually. So the project manager part is irrespective of programming language, I've added the Pyre directory, to quickly open this project. It will search for the project (add project using `pyre add <name> [path (defaults to the current path)`])
+You can also add projects manually. So the project manager part is irrespective of programming language, I've added the Pyre directory, to quickly open this project. It will search for the project (add project using `pyre add <name> [path] (defaults to the current path)`)
 
 ![pyre open project_name](https://github.com/Dhravya/pyre/blob/11b56eee3ead32e104079638dade03f4b62a36d0/assets/open_command.gif?raw=true)
 
