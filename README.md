@@ -17,10 +17,10 @@ Create, open, manage your Python projects with ease.
 # 📷 Screenshots, and demonstrations
 
 ### Help Command
-![pyre help](./assets/help.png)
+![pyre help](https://github.com/Dhravya/pyre/blob/11b56eee3ead32e104079638dade03f4b62a36d0/assets/help.png?raw=true)
 
 ### New Project command
-![Pyre new discord_bot](./assets/new_command.gif)
+![Pyre new discord_bot](https://github.com/Dhravya/pyre/blob/11b56eee3ead32e104079638dade03f4b62a36d0/assets/new_command.gif?raw=true))
 
 > You can configure your open editor to whatever you want. For my case, I have set it to `code-insiders.cmd`. To config editor, use `pyre config-editor <open_command>`
 
@@ -28,15 +28,15 @@ As it says, all new project names and their paths are saved to the system defaul
 
 You can also add projects manually. So the project manager part is irrespective of programming language, I've added the Pyre directory, to quickly open this project. It will search for the project (add project using `pyre add <name> [path (defaults to the current path)`])
 
-![pyre open project_name](./assets/open_command.gif)
+![pyre open project_name](https://github.com/Dhravya/pyre/blob/11b56eee3ead32e104079638dade03f4b62a36d0/assets/open_command.gif?raw=true)
 
 ### To list all projects and interactively open them, 
 
-![pyre list](./assets/list_and_open.gif)
+![pyre list](https://github.com/Dhravya/pyre/blob/11b56eee3ead32e104079638dade03f4b62a36d0/assets/list_and_open.gif?raw=true)
 
 ### Installing dependencies (and automatically adding to requirements.txt)
 
-![pyre install](./assets/install_command.gif)
+![pyre install](https://github.com/Dhravya/pyre/blob/11b56eee3ead32e104079638dade03f4b62a36d0/assets/install_command.gif?raw=true)
 
 # 📃 TODO
 - Add (or Fix) the run command (the only way I could figure out was using `std::process::Command`, but then how will I take input etc? Asked for help, recommended to use Python interpreter...)
