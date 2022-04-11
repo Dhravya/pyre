@@ -1,6 +1,10 @@
-use crate::manager::{get_editor, add_project};
+use crate::manager::{add_project, get_editor};
 use dialoguer::{theme::ColorfulTheme, Select};
-use std::{io::Write, process::Command, vec};
+use std::{
+    io::{Read, Write},
+    process::Command,
+    vec,
+};
 
 pub fn install_packages(packages: String) {
     println!("Preparing : {}", packages);
@@ -11,15 +15,16 @@ pub fn install_packages(packages: String) {
 
     // Check if env folder exists
     if !std::path::Path::new("env").exists() {
-        pip_path = "pip".to_string();
+        pip_path = "pip3".to_string();
     } else {
         // Get operating system
+        println!("Looks like you're inside a virtual environment");
         if std::env::consts::OS == "windows" {
-            pip_path = "env/Scripts/pip.exe".to_string();
+            pip_path = "./env/Scripts/pip.exe".to_string();
         } else if std::env::consts::OS == "linux" {
-            pip_path = "env/bin/pip".to_string();
+            pip_path = "./env/bin/pip".to_string();
         } else if std::env::consts::OS == "macos" {
-            pip_path = "env/bin/pip".to_string();
+            pip_path = "./env/bin/pip".to_string();
         }
     }
 
@@ -47,12 +52,24 @@ pub fn install_packages(packages: String) {
         .open("requirements.txt")
         .expect("Unable to open file");
 
+    // Read requirements.txt and get package names
+    let mut contents = String::new();
+    std::fs::File::open("requirements.txt")
+        .expect("Unable to open file")
+        .read_to_string(&mut contents)
+        .expect("Unable to read file");
+
+    // Split the string into a vector of strings
+    let packages_vec: Vec<&str> = contents.split("\n").collect();
+
     // Write the packages to the file
     for package in packages {
-        file.write_all(package.as_bytes())
-            .expect("Unable to write to file");
-        file.write_all("\n".as_bytes())
-            .expect("Unable to write to file");
+        if !packages_vec.contains(&package) {
+            file.write_all("\n".as_bytes())
+                .expect("Unable to write to file");
+            file.write_all(package.as_bytes())
+                .expect("Unable to write to file");
+        }
     }
 }
 

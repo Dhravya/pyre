@@ -26,12 +26,18 @@ enum Commands {
     ConfigEditor {
         editor_command: Option<String>,
     },
-    /// Opens the project specified by the project name
+    /// Opens the project specified by the project name. Run without arguments to see all projects and select
     Open {
-        project_name: String,
+        project_name: Option<String>,
     },
     /// Lists all the projects
     List,
+
+    /// Adds a project to the list of projects
+    Add {
+        project_name: String,
+        project_path: String,
+    },
 }
 
 // Pyre: The cargo for python
@@ -40,10 +46,12 @@ enum Commands {
 struct Cli {
     #[clap(subcommand)]
     command: Commands,
+
 }
 
 fn main() {
     let cli = Cli::parse();
+
 
     match &cli.command {
         Commands::I { packages } => {
@@ -80,17 +88,23 @@ fn main() {
             manager::set_editor(editor_command.clone().unwrap());
         }
         Commands::Open { project_name } => {
-            let editor = manager::get_editor();
-            let project_path = manager::get_project_path(project_name);
+            if project_name.is_none() {
+                manager::project_selector();
+            } else {
+                let editor = manager::get_editor();
+                let project_path = manager::get_project_path(&project_name.clone().unwrap());
 
-            std::process::Command::new(editor)
-                .arg(project_path)
-                .output()
-                .expect("Failed to execute process");
+                std::process::Command::new(editor)
+                    .arg(project_path)
+                    .output()
+                    .expect("Failed to execute process");
+            }
         }
         Commands::List => {
-            manager::get_projects();
-            println!("Now you can open the project by running pyre open <project_name>");
-        },
+            manager::project_selector_list();
+        }
+        Commands::Add { project_name, project_path } => {
+            manager::add_project(project_name, project_path);
+        }
     }
 }
