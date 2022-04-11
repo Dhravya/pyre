@@ -1,10 +1,11 @@
 [package]
 name = "pyre"
-version = "0.1.3"
+version = "0.1.4"
 edition = "2021"
-description = "The better PIP, i guess. Or maybe not. Well, helps you create and manage your Python projects."
+description = "Create, open, manage your Python projects with ease."
 author = "Dhravya Shah"
 license = "MIT"
+exclude = ["./assets/"]
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 

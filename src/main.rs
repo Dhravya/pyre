@@ -33,7 +33,7 @@ enum Commands {
     /// Adds a project to the list of projects
     Add {
         project_name: String,
-        project_path: String,
+        project_path: Option<String>,
     },
 }
 
@@ -43,12 +43,10 @@ enum Commands {
 struct Cli {
     #[clap(subcommand)]
     command: Commands,
-
 }
 
 fn main() {
     let cli = Cli::parse();
-
 
     match &cli.command {
         Commands::I { packages } => {
@@ -86,8 +84,22 @@ fn main() {
         Commands::List => {
             manager::project_selector_list();
         }
-        Commands::Add { project_name, project_path } => {
-            manager::add_project(project_name, project_path);
+        Commands::Add {
+            project_name,
+            project_path,
+        } => {
+            if project_path.is_none() {
+                // Get path of current directory
+                manager::add_project(
+                    project_name,
+                    std::env::current_dir()
+                        .unwrap()
+                        .as_os_str()
+                        .to_str()
+                        .unwrap(),
+                );
+            }
+            manager::add_project(project_name, &project_path.clone().unwrap());
         }
     }
 }
