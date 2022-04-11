@@ -14,6 +14,13 @@ Create, open, manage your Python projects with ease.
 - Whenever I installed dependencies, I forgot to add them in the requirements.txt file, so `pyre i <dependencies>` automatically updates the requirements file, very convenient for me
 - It's just a tool to make Python development experience better, like Cargo does, for Rust.
 
+# ⬇️ Installation
+
+Just run this command, make sure you have cargo installed
+```
+cargo install pyre
+```
+
 # 📷 Screenshots, and demonstrations
 
 ### Help Command
