@@ -59,7 +59,7 @@ You can also add projects manually. So the project manager part is irrespective 
 - The stuff inside [manager.rs](./src/manager.rs) is kinda badly implemented 
 - Pip install isn't *interactive* i mean, it just prints the output *after* installation is done
 - The config commands should be better, maybe under the `config` subcommand where ppl can pass args to do stuff (like get the data file location, change default editor command, etc.)
-- Using my own [Readme Generator](https://github.com/dhravya/readme-generator) and [Nexxel's License generator](https://github.com/nexxeln/license-generator) to generate README.md and LICENSE easily
+- Using my own [Readme Generator](https://github.com/dhravya/readme-generator) and [nexxel's License generator](https://github.com/nexxeln/license-generator) to generate README.md and LICENSE easily
 
 ## Support
 - Follow me on [Github](https://github.com/dhravya) , [Twitter](https://twitter.com/dhravyashah) and [Dev.to](https://dev.to/dhravya) 
