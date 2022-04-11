@@ -1,6 +1,6 @@
 [package]
 name = "pyre"
-version = "0.1.43"
+version = "0.1.44"
 edition = "2021"
 description = "Create, open, manage your Python projects with ease."
 author = "Dhravya Shah"

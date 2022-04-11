@@ -1,4 +1,4 @@
-<img src="https://github.com/Dhravya/pyre/blob/11b56eee3ead32e104079638dade03f4b62a36d0/logo.png" alt="Pyre Logo" style="float: left; margin: 0 10px 0 0;" align="left" height="150" width="150">
+<img src="https://github.com/Dhravya/pyre/blob/11b56eee3ead32e104079638dade03f4b62a36d0/logo.png?raw=true" alt="Pyre Logo" style="float: left; margin: 0 10px 0 0;" align="left" height="150" width="150">
 
 ## Pyre
 
