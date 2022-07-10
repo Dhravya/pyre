@@ -88,7 +88,14 @@ fn main() {
             }
         },
         Commands::ConfigEditor { editor_command } => {
-            manager::set_editor(editor_command.clone().unwrap());
+            match editor_command {
+                Some(cmd:) => {
+                    manager::set_editor(cmd);
+                },
+                None => {
+                    println!("Please enter the new command!")
+                }
+            }
         }
         Commands::Open { project_name } => {
             if project_name.is_none() {
