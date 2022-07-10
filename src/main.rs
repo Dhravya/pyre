@@ -13,7 +13,7 @@ enum Commands {
     },
     /// Uninstalls a package, well, runs pip uninstall
     Uninstall {
-        package: String,
+        packages: Option<String>,
     },
     /// Creates a new python project
     New {
@@ -50,23 +50,59 @@ fn main() {
 
     match &cli.command {
         Commands::I { packages } => {
-            commands::install_packages(packages.clone().unwrap());
+            match packages {
+                Some(pkgs) => {
+                    commands::install_packages(pkgs.to_string());
+                },
+                None => {
+                    println!("Please enter atleast one package!")
+                }
+            }
         }
         Commands::New { name } => {
-            commands::create_new_project(name.clone().unwrap());
+            match name {
+                Some(nm) => {
+                    commands::create_new_project(nm.to_string());
+                },
+                None => {
+                    println!("Please enter the name of the new project!")
+                }
+            }
         }
-        Commands::Install { packages } => commands::install_packages(packages.clone().unwrap()),
-
-        Commands::Uninstall { package } => {
-            std::process::Command::new("pip")
-                .arg("uninstall")
-                .arg("-y")
-                .arg(package)
-                .output()
-                .expect("Failed to execute process");
-        }
+        Commands::Install { packages } =>{
+            match packages {
+                Some(pkgs) => {
+                    commands::install_packages(pkgs.to_string());
+                },
+                None => {
+                    println!("Please enter atleast one package!")
+                }
+            }
+        },
+        Commands::Uninstall{ packages } => {
+            match packages {
+                Some(pkgs) => {
+                    std::process::Command::new("pip")
+                        .arg("uninstall")
+                        .arg("-y")
+                        .arg(pkgs)
+                        .output()
+                        .expect("Failed to execute process");
+                },
+                None => {
+                    println!("Please enter atleast one package!")
+                }
+            }
+        },
         Commands::ConfigEditor { editor_command } => {
-            manager::set_editor(editor_command.clone().unwrap());
+            match editor_command {
+                Some(cmd) => {
+                    manager::set_editor(cmd.to_string());
+                },
+                None => {
+                    println!("Please enter the new command!")
+                }
+            }
         }
         Commands::Open { project_name } => {
             if project_name.is_none() {
