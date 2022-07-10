@@ -60,7 +60,14 @@ fn main() {
             }
         }
         Commands::New { name } => {
-            commands::create_new_project(name.clone().unwrap());
+            match name {
+                Some(nm) => {
+                    commands::create_new_project(nm.to_string());
+                },
+                None => {
+                    println!("Please enter the name of the new project!")
+                }
+            }
         }
         Commands::Install { packages } =>{
             match packages {
