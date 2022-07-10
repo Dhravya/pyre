@@ -89,8 +89,8 @@ fn main() {
         },
         Commands::ConfigEditor { editor_command } => {
             match editor_command {
-                Some(cmd:) => {
-                    manager::set_editor(cmd);
+                Some(cmd) => {
+                    manager::set_editor(cmd.to_string());
                 },
                 None => {
                     println!("Please enter the new command!")
