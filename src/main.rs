@@ -1,5 +1,3 @@
-use std::clone;
-
 use clap::{Parser, Subcommand};
 mod commands;
 mod manager;
@@ -126,7 +124,7 @@ fn main() {
                     .unwrap(),
                 project_path.clone().unwrap(),
             );
-            
+
             manager::add_project(
                 project_name,
                 &p,
