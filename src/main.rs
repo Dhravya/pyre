@@ -126,7 +126,7 @@ fn main() {
                     .unwrap(),
                 project_path.clone().unwrap(),
             );
-            println!("{}", p);
+            
             manager::add_project(
                 project_name,
                 &p,
