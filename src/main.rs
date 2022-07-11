@@ -19,7 +19,7 @@ enum Commands {
     },
     /// Creates a new python project
     New {
-        name: Option<String>,
+        name: String,
     },
     /// Configuration the open editor command
     ConfigEditor {
@@ -59,13 +59,8 @@ fn main() {
                 println!("Please enter atleast one package!")
             }
         },
-        Commands::New { name } => match name {
-            Some(nm) => {
-                commands::create_new_project(nm.to_string());
-            }
-            None => {
-                println!("Please enter the name of the new project!")
-            }
+        Commands::New { name } => {
+            commands::create_new_project(name.to_string());
         },
         Commands::Install { packages } => match packages {
             Some(pkgs) => {
