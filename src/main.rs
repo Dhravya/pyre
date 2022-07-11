@@ -17,11 +17,11 @@ enum Commands {
     },
     /// Creates a new python project
     New {
-        name: Option<String>,
+        name: String,
     },
     /// Configuration the open editor command
     ConfigEditor {
-        editor_command: Option<String>,
+        editor_command: String,
     },
     /// Opens the project specified by the project name. Run without arguments to see all projects and select
     Open {
@@ -49,61 +49,41 @@ fn main() {
     let cli = Cli::parse();
 
     match &cli.command {
-        Commands::I { packages } => {
-            match packages {
-                Some(pkgs) => {
-                    commands::install_packages(pkgs.to_string());
-                },
-                None => {
-                    println!("Please enter atleast one package!")
-                }
+        Commands::I { packages } => match packages {
+            Some(pkgs) => {
+                commands::install_packages(pkgs.to_string());
             }
-        }
-        Commands::New { name } => {
-            match name {
-                Some(nm) => {
-                    commands::create_new_project(nm.to_string());
-                },
-                None => {
-                    println!("Please enter the name of the new project!")
-                }
-            }
-        }
-        Commands::Install { packages } =>{
-            match packages {
-                Some(pkgs) => {
-                    commands::install_packages(pkgs.to_string());
-                },
-                None => {
-                    println!("Please enter atleast one package!")
-                }
+            None => {
+                println!("Please enter atleast one package!")
             }
         },
-        Commands::Uninstall{ packages } => {
-            match packages {
-                Some(pkgs) => {
-                    std::process::Command::new("pip")
-                        .arg("uninstall")
-                        .arg("-y")
-                        .arg(pkgs)
-                        .output()
-                        .expect("Failed to execute process");
-                },
-                None => {
-                    println!("Please enter atleast one package!")
-                }
+        Commands::New { name } => {
+            commands::create_new_project(name.to_string());
+        },
+        Commands::Install { packages } => match packages {
+            Some(pkgs) => {
+                commands::install_packages(pkgs.to_string());
+            }
+            None => {
+                println!("Please enter atleast one package!")
+            }
+        },
+        Commands::Uninstall { packages } => match packages {
+            Some(pkgs) => {
+                std::process::Command::new("pip")
+                    .arg("uninstall")
+                    .arg("-y")
+                    .arg(pkgs)
+                    .output()
+                    .expect("Failed to execute process");
+            }
+            None => {
+                println!("Please enter atleast one package!")
             }
         },
         Commands::ConfigEditor { editor_command } => {
-            match editor_command {
-                Some(cmd) => {
-                    manager::set_editor(cmd.to_string());
-                },
-                None => {
-                    println!("Please enter the new command!")
-                }
-            }
-        }
+            manager::set_editor(editor_command.clone());
+        },
         Commands::Open { project_name } => {
             if project_name.is_none() {
                 manager::project_selector();
@@ -135,7 +115,20 @@ fn main() {
                         .unwrap(),
                 );
             }
-            manager::add_project(project_name, &project_path.clone().unwrap());
+            let p = format!(
+                "{}/{}",
+                std::env::current_dir()
+                    .unwrap()
+                    .as_os_str()
+                    .to_str()
+                    .unwrap(),
+                project_path.clone().unwrap(),
+            );
+
+            manager::add_project(
+                project_name,
+                &p,
+            );
         }
     }
 }
