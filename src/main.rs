@@ -92,7 +92,7 @@ fn main() {
             } else {
                 let editor = manager::get_editor();
                 let project_path = manager::get_project_path(&project_name.clone().unwrap());
-                println!("{}", editor);
+
                 std::process::Command::new(editor)
                     .arg(project_path)
                     .output()
